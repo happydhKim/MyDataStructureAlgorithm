@@ -5,5 +5,6 @@
 	<classpathentry kind="src" path="SamsungExpertAcademy"/>
 	<classpathentry kind="src" path="SWEA_D3"/>
 	<classpathentry kind="src" path="SWEA_D4"/>
+	<classpathentry kind="src" path="TopCoder"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
