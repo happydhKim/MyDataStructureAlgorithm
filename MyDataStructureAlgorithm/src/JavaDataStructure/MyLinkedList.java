@@ -4,7 +4,7 @@ public class MyLinkedList {
 	// 첫번째 노드를 가리키는 필드
 	private Node head;
 	private Node tail;
-	private int size = 0;
+	private int size = 0; // 몇개의 객체를 쓸건가요 
 
 	private class Node {
 		// 데이터가 저장될 필드
