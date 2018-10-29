@@ -8,6 +8,10 @@ import java.util.Scanner;
  * @author kimdohyun
  * BOJ 11667 타임머신
  */
+
+// 벨만포드 알고리즘
+// 음수사이클이 존재할 경우 최단경로 없음 
+// O(EV) 의 시간 복잡도 
 class TimeM {
 	int from, to, cost;
 
