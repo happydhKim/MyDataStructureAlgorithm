@@ -1,3 +1,5 @@
+// https://www.acmicpc.net/problem/15649
+
 #include <stdio.h>
 
 int n, m, i, c[9];
