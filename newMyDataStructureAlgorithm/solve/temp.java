@@ -1,89 +1,103 @@
-package onlineStudy;
+package dss;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 
-class Fish {
+class Pair {
 	int x;
 	int y;
-	int step;
 
-	Fish(int x, int y, int step) {
+	Pair(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.step = step;
 	}
 }
 
-public class goDs {
-	static final int X[] = { -1, 0, 0, 1 }; // 상 좌 우 하
-	static final int Y[] = { 0, -1, 1, 0 };
+public class temp {
+	static int N, M, H, cnt, ans, a[][], made[];
+	static boolean check[][], cont[];
+	static Pair ladder[];
 
-	static int N, a[][], dist[][], age, cnt, eat, ans;
-	static boolean check[][], door;
-	static Queue<Fish> q;
-	static Queue<Fish> temp;
-
-	static void bfs() {
-		door = false;
-		while (true) {
-			int size = q.size();
-			if (size == 0) {
-				return;
-			}
-			for (int i = 0; i < size; i++) {
-				Fish f = q.remove();
-				int x = f.x;
-				int y = f.y;
-				int step = f.step;
-				for (int k = 0; k < 4; k++) {
-					int nx = x + X[k];
-					int ny = y + Y[k];
-					if (nx < 0 || ny < 0 || nx >= N || ny >= N) {
-						continue;
-					}
-					if (!check[nx][ny] && a[nx][ny] != 0 && a[nx][ny] < age) {
-						if (door && cnt < step) {
-							break;
-						}
-						temp.add(new Fish(nx, ny, step + 1));
-						check[nx][ny] = true;
-						door = true;
-						cnt = step;
-					}
-					if ((!check[nx][ny] && a[nx][ny] == 0) || (!check[nx][ny] && a[nx][ny] == age)) {
-						q.add(new Fish(nx, ny, step + 1));
-						check[nx][ny] = true;
-					}
+	static boolean go(int a[][]) {
+		boolean chk = true;
+		for (int i = 0; i < N + 1; i++) {
+			int nx = 0;
+			int ny = i;
+			for (int j = 1; j < H + 1; j++) {
+				nx = j;
+				if (i - 1 >= 0 && a[nx][ny] == 1) {
+					ny--;
+				} else if (i + 1 <= H && a[nx][ny] == 1) {
+					ny++;
 				}
 			}
+			if (ny == i) {
+				chk = true;
+			} else {
+				chk = false;
+				return false;
+			}
 		}
+		return chk;
+	}
 
+	static void dfs(int depth, int r, int lCnt) {
+		if (ans != 987654321) {
+			return;
+		}
+		if (depth >= lCnt) {
+//			for (int i = 0; i < H + 1; i++) {
+//				for (int j = 0; j < N + 1; j++) {
+//					System.out.print(a[i][j]+" ");
+//				}
+//				System.out.println();
+//			}
+//			System.out.println();
+			if (go(a)) {
+				ans = depth;
+			}
+			return;
+		}
+		for (int i = r; i <= H; i++) {
+			for (int j = 1; j < N; j++) {
+				if (a[i][j] == 1 || a[i][j - 1] == 1 || a[i][j + 1] == 1) {
+					continue;
+				}
+				a[i][j] = 1;
+				dfs(depth + 1, i, lCnt);
+				a[i][j] = 0;
+			}
+		}
 	}
 
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		a = new int[N][N];
-		dist = new int[N][N];
-		check = new boolean[N][N];
-		q = new LinkedList<>();
-		temp = new LinkedList<>();
-		age = 2;
-		ans = 0;
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				a[i][j] = sc.nextInt();
-				if (a[i][j] == 9) {
-					a[i][j] = 0;
-					q.add(new Fish(i, j, 0));
-					check[i][j] = true;
-				}
-			}
+		N = sc.nextInt(); // 가로
+		M = sc.nextInt(); // 세로 수
+		H = sc.nextInt(); // 세로
+		a = new int[H + 1][N + 1];
+		cont = new boolean[N * H];
+		check = new boolean[H + 1][N + 1];
+		made = new int[3];
+		ans = 987654321;
+		ladder = new Pair[M];
+		for (int i = 0; i < M; i++) {
+			ladder[i] = new Pair(sc.nextInt(), sc.nextInt());
+			a[ladder[i].x][ladder[i].y] = 1;
+			check[ladder[i].x][ladder[i].y] = true;
 		}
-		bfs();
-		System.out.println(ans);
+		for (int i = 0; i < 4; i++) {
+			dfs(0, 1, i);
+			if (ans != 987654321) {
+				break;
+			}
+
+		}
+//		dfs(0, 1, 1);
+		if (ans != 987654321) {
+			System.out.println("-1");
+		} else {
+			System.out.println(ans);
+		}
 		sc.close();
 	}
 }
