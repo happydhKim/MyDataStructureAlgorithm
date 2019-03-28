@@ -22,7 +22,7 @@ class Tree implements Comparable<Tree> {
 	}
 }
 
-public class test02 {
+public class 16235 {
 	static final int X[] = { 0, 0, -1, 1, -1, 1, -1, 1 };
 	static final int Y[] = { -1, 1, 0, 0, -1, 1, 1, -1 };
 	static int N, M, K, A[][], add[][], cnt, ans;
