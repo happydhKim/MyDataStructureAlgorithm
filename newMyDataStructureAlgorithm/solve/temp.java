@@ -1,105 +1,71 @@
-package dss;
+package onlineStudy;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 
-class Pair {
-	int x;
-	int y;
+public class goDs {
+	static final int X[] = { 1, 0, -1, 0 };
+	static final int Y[] = { 0, 1, 0, -1 };
+	static final int GEN[] = { 0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
+	static int N, ans, a[][], dragon[], size;
 
-	Pair(int x, int y) {
-		this.x = x;
-		this.y = y;
+	static void generation(int x, int y, int d, int g) {
+		dragon[0] = d;
+		boolean first = true;
+		for (int i = 1; i <= g; i++) {
+			int step = 0;
+			for (int j = GEN[i] - 1; j >= GEN[i - 1]; j--) {
+				d = dragon[step++] + 1;
+				if (d == 4) {
+					d = 0;
+				}
+				dragon[j] = d;
+				size++;
+				if (first) {
+					first = false;
+					break;
+				}
+			}
+		}
+		writing(x, y);
 	}
-}
 
-public class test01 {
-	static final int X[] = { 0, 0, -1, 1 };
-	static final int Y[] = { -1, 1, 0, 0 };
-	static int N, L, R, a[][], cnt, score, ans;
-	static boolean check[][], moving[][];
-	static Queue<Pair> q = new LinkedList<>();;
-	static Queue<Pair> cp;
+	static void writing(int x, int y) {
+		int nx = x+200;
+		int ny = y+200;
+		a[x][y] = 1;
+		for (int i = 0; i < size; i++) {
+			nx = nx + X[dragon[i]];
+			ny = ny + Y[dragon[i]];
+			a[nx][ny] = 1;
+		}
+	}
 
-	static void bfs() {
-		cp = new LinkedList<>();
-		check = new boolean[N][N];
-		moving = new boolean[N][N];
-		q.add(new Pair(0, 0));
-		score = 0;
-		cnt = 0;
-		while (!q.isEmpty()) {
-			Pair p = q.remove();
-			int x = p.x;
-			int y = p.y;
-			if (check[x][y]) {
-				continue;
-			}
-			check[x][y] = true;
-			for (int k = 0; k < 4; k++) {
-				int nx = x + X[k];
-				int ny = y + Y[k];
-				if (nx < 0 || ny < 0 || nx >= N || ny >= N) {
-					continue;
+	static int count() {
+		for (int i = 0; i < 1049; i++) {
+			for (int j = 0; j < 1049; j++) {
+				if (a[i][j] == 1 && a[i + 1][j] == 1 && a[i][j + 1] == 1 && a[i + 1][j + 1] == 1) {
+					ans++;
 				}
-				int calc = Math.abs(a[x][y] - a[nx][ny]);
-				if (calc >= L && calc <= R && !moving[nx][ny]) {
-					moving[nx][ny] = true;
-					if (!moving[x][y]) {
-						cp.add(new Pair(x, y));
-						moving[x][y] = true;
-					}
-					cp.add(new Pair(nx, ny));
-				}
-				q.add(new Pair(nx, ny));
 			}
 		}
-		while (!cp.isEmpty()) {
-			Pair p = cp.remove();
-			int x = p.x;
-			int y = p.y;
-			cnt++;
-			score += a[x][y];
-			a[x][y] = -1;
-		}
-		if (cnt == 0) {
-			return;
-		} else {
-			int val = score / cnt;
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					if (a[i][j] == -1) {
-						a[i][j] = val;
-					}
-				}
-			}
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					System.out.print(a[i][j] + " ");
-				}
-				System.out.println();
-			}
-			System.out.println();
-			ans++;
-			bfs();
-		}
+		return ans;
 	}
 
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
-		L = sc.nextInt();
-		R = sc.nextInt();
-		a = new int[N][N];
+		a = new int[1050][1050];
 		ans = 0;
 		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				a[i][j] = sc.nextInt();
-			}
+			dragon = new int[1080];
+			size = 1;
+			int x = sc.nextInt();
+			int y = sc.nextInt();
+			int d = sc.nextInt();
+			int g = sc.nextInt();
+			generation(x, y, d, g);
 		}
-		bfs();
-		System.out.println(ans);
+		System.out.println(count());
 		sc.close();
 	}
 }
