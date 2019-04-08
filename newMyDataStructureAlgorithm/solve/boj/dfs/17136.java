@@ -1,5 +1,5 @@
 package dss;
-
+//fail
 import java.util.Scanner;
 
 public class test03 {
@@ -50,7 +50,6 @@ public class test03 {
 			return;
 		}
 		if (chkEnd()) {
-			System.out.println(cnt);
 			if (ans > cnt) {
 				ans = cnt;
 			}
@@ -58,18 +57,25 @@ public class test03 {
 		}
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
-				if (a[i][j] == 0) {
+				if (a[i][j] == 0 || check[i][j]) {
 					continue;
+
 				}
-				System.out.println(i + " " + j);
+//				System.out.println(i + " " + j +" "+cnt);
 				for (int k = 5; k >= 1; k--) {
-					if (a[i][j] == 1 && things[k] < 6 && i + k < N && j + k < N) {
+					if (things[k] >= 5 ) {
+						continue;
+//						return;
+					}
+					int x = i + k - 1;
+					int y = j + k - 1;
+					if (x < N && y < N) {
 						if (possible(i, j, k)) {
 							chkTrue(i, j, k);
 							things[k] += 1;
 							dfs(cnt + 1);
-							chkFalse(i, j, k);
 							things[k] -= 1;
+							chkFalse(i, j, k);
 						}
 					}
 				}
