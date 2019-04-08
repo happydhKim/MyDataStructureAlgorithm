@@ -1,10 +1,10 @@
-package dss;
-//fail
 import java.util.Scanner;
 
-public class test03 {
+//solved
+
+public class Main {
 	static final int N = 10;
-	static int a[][], things[], ans;
+	static int a[][], things[], ans,count;
 	static boolean check[][], write;
 
 	static boolean possible(int x, int y, int size) {
@@ -59,13 +59,10 @@ public class test03 {
 			for (int j = 0; j < N; j++) {
 				if (a[i][j] == 0 || check[i][j]) {
 					continue;
-
 				}
-//				System.out.println(i + " " + j +" "+cnt);
 				for (int k = 5; k >= 1; k--) {
 					if (things[k] >= 5 ) {
 						continue;
-//						return;
 					}
 					int x = i + k - 1;
 					int y = j + k - 1;
@@ -79,6 +76,7 @@ public class test03 {
 						}
 					}
 				}
+				return;
 			}
 		}
 	}
@@ -89,6 +87,7 @@ public class test03 {
 		ans = 987654321;
 		check = new boolean[N][N];
 		things = new int[6];
+		count=0;
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				a[i][j] = sc.nextInt();
