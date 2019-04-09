@@ -1,4 +1,4 @@
-package dss;
+package onlineStudy;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -14,7 +14,7 @@ class Pair {
 	}
 }
 
-public class test01 {
+public class goDs {
 	static final int X[] = { 0, 0, -1, 1 };
 	static final int Y[] = { -1, 1, 0, 0 };
 	static int N, L, R, cnt, ans, sum, a[][];
@@ -24,6 +24,7 @@ public class test01 {
 
 	static void bfs() {
 		boolean first = true;
+		sum = 0;
 		while (!sq.isEmpty()) {
 			Pair p = sq.remove();
 			int x = p.x;
@@ -38,40 +39,29 @@ public class test01 {
 				if (calc >= L && calc <= R) {
 					if (first) {
 						first = false;
-						sq.add(new Pair(x, y));
 						nq.add(new Pair(x, y));
 						sum += a[x][y];
 					}
 					check[nx][ny] = true;
 					sq.add(new Pair(nx, ny));
 					nq.add(new Pair(nx, ny));
+
 					sum += a[nx][ny];
 				}
-				first = false;
 			}
 		}
 		int size = nq.size();
-		System.out.println(size);
 		if (size == 0) {
 			return;
 		} else {
 			int val = sum / size;
-
 			while (!nq.isEmpty()) {
 				Pair p = nq.remove();
 				int x = p.x;
 				int y = p.y;
-//				System.out.println(size);
 				a[x][y] = val;
 
 			}
-//			for (int i = 0; i < N; i++) {
-//				for (int j = 0; j < N; j++) {
-//					System.out.print(a[i][j] + " ");
-//				}
-//				System.out.println();
-//			}
-//			System.out.println();
 			cycle = true;
 		}
 	}
@@ -99,7 +89,6 @@ public class test01 {
 					if (!check[i][j]) {
 						check[i][j] = true;
 						sq.add(new Pair(i, j));
-						sum = 0;
 						bfs();
 					}
 				}
