@@ -3,7 +3,7 @@
  * 생활코딩 ArrayList Java
  * https://opentutorials.org/module/1335/8715
  */
-public class MyArrayList {
+public class arrayList {
 	private int size = 0;
 	private Object elementData[] = new Object[100];
 
