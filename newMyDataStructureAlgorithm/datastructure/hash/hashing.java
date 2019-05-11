@@ -1,5 +1,5 @@
 
-public class Hashing {
+public class hashing {
 	// 데이터를 저장할 Entry는 값과 다음 Entry를 가진다.
 	private class Entry {
 		private int value;
@@ -10,7 +10,7 @@ public class Hashing {
 	private Entry hTable[];
 
 	// Hash Table은 size와 배열 테이블을 생성한다.
-	public study02(int size) {
+	public hashing(int size) {
 		this.size = size;
 		this.hTable = new Entry[size];
 	}
@@ -139,5 +139,9 @@ public class Hashing {
 			result.append("\n");
 		}
 		return result.toString();
+	}
+
+	public static void main(String args[]) {
+
 	}
 }
