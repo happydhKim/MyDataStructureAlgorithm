@@ -5,7 +5,7 @@
 #define MAX 100002
 using namespace std;
 
-vector<string> table[MAX];
+vector<string> table[MAX]; // 해시의 체이닝 역할
 
 int Hash(string str) {
     int sum = 0;
@@ -45,7 +45,7 @@ int main(void) {
             int n = Hash(str);
             int L = table[n].size();
             for (int j = 0; j < L; j++) {
-                if (check(table[n][j], str)) {
+                if (check(table[n][j], str)) { // table[n][j] 어떤 특정한 대상의 해쉬값이 n이 나왔을 때, 그 n이 되는 대상들의 집합의
                     cnt++;
                     break;
                 }
