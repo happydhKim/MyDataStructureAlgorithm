@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class MyQueue {
+class Queue {
 	Node head;
 	Node tail;
 	int size;
@@ -111,7 +111,7 @@ public class test02 {
 
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
-		MyQueue q = new MyQueue();
+		Queue q = new Queue();
 		q.addFirst(5, 3);
 
 		System.out.println();
