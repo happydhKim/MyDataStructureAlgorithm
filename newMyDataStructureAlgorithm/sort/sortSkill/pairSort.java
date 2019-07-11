@@ -1,73 +1,56 @@
 //아직 작업중
-
 import java.util.Scanner;
 
 public class pairSort {
-	static int N, xy[][], st[], sti;
+	static int N;
 
-	static void st_push(int v) {
-		st[sti++] = v;
-	}
+	static void qst(int a[][], int left, int right) {
+		int l = left;
+		int r = right;
 
-	static int st_pop() {
-		return st[--sti];
-	}
+		int pivotX = a[(int) ((left + right) / 2)][0];
+		int pivotY = a[(int) ((left + right) / 2)][1];
 
-	static void qsrt() {
-		sti = 0;
-		int t, p;
-		int i, j;
-		int l, r;
-		st_push(0);
-		st_push(N - 1);
-		while (sti != 0) {
-			r = st_pop();
-			l = st_pop();
-			p = r;
-			i = l - 1;
-			j = r;
-			if (i < j) {
-				while (true) {
-					while (xy[++i][1] != xy[p][1] ? xy[i][1] < xy[p][1] : xy[i][0] < xy[p][0]) {
-					}
-					while (xy[--j][1] != xy[p][1] ? xy[j][1] > xy[p][1] : xy[j][0] > xy[p][0]) {
-					}
-					if (i >= j) {
-						break;
-					}
-					int xt = xy[i][0], yt = xy[i][1];
-					xy[i][0] = xy[j][0];
-					xy[i][1] = xy[j][1];
-					xy[j][0] = xt;
-					xy[j][1] = yt;
-				}
-				int xt = xy[i][0], yt = xy[i][1];
-				xy[i][0] = xy[p][0];
-				xy[i][1] = xy[p][1];
-				xy[p][0] = xt;
-				xy[p][1] = yt;
-				st_push(l);
-				st_push(i - 1);
-				st_push(i + 1);
-				st_push(r);
+		while (l <= r) {
+			while (a[l][0] < pivotX || (a[l][0] == pivotX && a[l][1] < pivotY)) {
+				l++;
 			}
+			while (pivotX < a[r][0] || (pivotX <= a[r][0] && pivotY < a[r][1])) {
+				r--;
+			}
+			if (l <= r) {
+				if (l != r) {
+					int tempX = a[l][0];
+					int tempY = a[l][1];
+					a[l][0] = a[r][0];
+					a[l][1] = a[r][1];
+					a[r][0] = tempX;
+					a[r][1] = tempY;
+				}
+				l++;
+				r--;
+			}
+		}
 
+		if (left < r) {
+			qst(a, left, r);
+		}
+		if (l < right) {
+			qst(a, l, right);
 		}
 	}
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
-		xy = new int[N][2];
-		st = new int[100001];
+		int a[][] = new int[N][2];
 		for (int i = 0; i < N; i++) {
-			xy[i][0] = sc.nextInt();
-			xy[i][1] = sc.nextInt();
+			a[i][1] = sc.nextInt();
+			a[i][0] = sc.nextInt();
 		}
-		qsrt();
+		qst(a, 0, N - 1);
 		for (int i = 0; i < N; i++) {
-			System.out.print(xy[i][0] + " " + xy[i][1]);
-			System.out.println();
+			System.out.println(a[i][1] + " " + a[i][0]);
 		}
 		sc.close();
 	}
