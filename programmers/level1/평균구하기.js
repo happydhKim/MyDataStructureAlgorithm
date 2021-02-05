@@ -1,0 +1,1 @@
+const solution = (arr) => arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0) / arr.length;
