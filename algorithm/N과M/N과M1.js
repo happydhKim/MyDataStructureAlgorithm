@@ -8,9 +8,10 @@ let output = '';
 const dfs = (depth) => {
   if(depth >= M){
     output += array.join(' ') + '\n';
-    
+
     return;
   }
+  
   for(let i = 1; i <= N; i++) {
     if (!check[i]) {
       check[i] = true;
