@@ -1,29 +1,33 @@
 // https://www.acmicpc.net/problem/15654
-const input = require('fs').readFileSync('dev/stdin').toString().split(' ').map(x => +x);
+let input = require('fs').readFileSync('./dev/stdin').toString().split('\n')
 
-let [given,nums] = [input[0],input[1].sort((a,b) => a - b)]
-let [N, M] = given.map(e => Number(e))
+const firstLine = input[0].split(' ').map((vlaue) => (+vlaue));
+const secondLine = input[1].split(' ').map((value) => (+value));
 
-let check = new Array(N).fill(false);
-let output = [];
+const N = firstLine[0];
+const M = firstLine[1];
+let output = '';
 
-const dfs = (array) => {
-  if(array.length === M){
-    output.push(arr.join(' '));
+const nums = secondLine.sort((a, b) => (a - b));
+const check = new Array(N + 1).fill(false);
+const answer = [];
 
+const combination = (depth) => {
+  if (depth === M) {
+    output = output + answer.join(' ') + '\n';
     return;
   }
 
-  for(let i = 0; i < N; i++) {
+  for (let i = 0; i < N; i++) {
     if (!check[i]) {
       check[i] = true;
-      array.push(nums[i]);
-      dfs(array);
-      array.pop(i);
+      answer.push(nums[i]);
+      combination(depth+1);
+      answer.pop(nums[i]);
       check[i] = false;
     }
   }
-}
+};
 
-dfs([]);
-console.log(output.join('\n'));
+combination(0)
+console.log(output.trim())
