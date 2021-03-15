@@ -34,5 +34,3 @@ function solution(nums) {
 
   return answer; 
 }
-
-console.log(solution([5, 10, 1,2,3]));
