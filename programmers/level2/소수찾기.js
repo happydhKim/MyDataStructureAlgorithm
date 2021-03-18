@@ -1,11 +1,7 @@
 function solution(numbers) {
-  let answer = 0;
   let primeNumbers = [];
 
-  const numbersArr = numbers.split('');
-
-  // 소수 판별 함수
-  const determinePrime = (num) => {
+  const checkPrime = (num) => {
     let count = 0;
     for (let i = 1; i <= num; i++) {
       if (num % i === 0) {
@@ -20,8 +16,7 @@ function solution(numbers) {
     }
   };
 
-  // 숫자 만들기
-  const mergeNumbers = (arr, str) => {
+  const dfs = (arr, str) => {
     console.log(arr, str);
     if (arr.length > 0) {
       for (let i = 0; i < arr.length; i++) {
@@ -32,14 +27,13 @@ function solution(numbers) {
     }
 
     if (str.length > 0) {
-      determinePrime(+str);
+      checkPrime(+str);
     }
   };
 
-  mergeNumbers(numbersArr, "");
+  dfs(numbers.split(''), '');
 
-  answer = primeNumbers.length;
-  return answer;
+  return primeNumbers.length;
 }
 
 console.log(solution('17'));
