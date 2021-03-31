@@ -4,32 +4,39 @@
  * @return {number}
  */
 
-const binarySearch = (nums, target) => {
-  let lowIndex = 0;
-  let highIndex = nums.length - 1;
-
-  if (target < nums[0]) {
+const binarySearch = (sortedArray, target) => {
+  let startIndex = 0;
+  let endIndex = sortedArray.length - 1;
+  
+  if (target < sortedArray[0]) {
     return 0;
   }
-  if (target > nums[highIndex]) {
-    return highIndex + 1;
+  if (target > sortedArray[endIndex]) {
+    return endIndex + 1;
   }
-  while (lowIndex <= highIndex) {
-    let midIndex = Math.floor((highIndex + lowIndex) / 2);
-    let pointer = nums[midIndex];
 
-    // if (midIndex !== 0 && pointer < target && target > nums[minIndex - 1]) {
-    //   return midIndex;
-    // }
-    console.log('answer',target,  pointer, nums[midIndex - 1], midIndex);
-    if (pointer === target) {
-      return midIndex;
-    } else if (pointer > target) {
-      highIndex = midIndex - 1;
-    } else {
-      highIndex = midIndex + 1;
+  while (startIndex <= endIndex) {
+    const middleIndex = startIndex + Math.floor((endIndex - startIndex) / 2);
+    const nextTarget = sortedArray[middleIndex];
+
+    if (nextTarget < target && sortedArray[middleIndex + 1] > target) {
+      return middleIndex + 1;
     }
+    if (nextTarget === target ||
+       (middleIndex !== 0 
+        && sortedArray[middleIndex - 1] < target 
+        && sortedArray[middleIndex + 1] > target)) {
+      
+      if (sortedArray[middleIndex - 1] === target) return middleIndex - 1;
+
+      return middleIndex;
+    }
+    nextTarget < target
+      ? startIndex = middleIndex + 1
+      : endIndex = middleIndex - 1;
   }
+
+  return -1;
 };
 
 var searchInsert = function(nums, target) {
@@ -37,11 +44,14 @@ var searchInsert = function(nums, target) {
 };
 
 
-console.log(searchInsert([1,3,5,6], 5));
+// console.log(searchInsert([1,3,5,6], 5));
 // console.log(searchInsert([1,3,5,6], 2));
 // console.log(searchInsert([1,3,5,6], 7));
 // console.log(searchInsert([1,3,5,6], 0));
 // console.log(searchInsert([1], 0));
+// console.log(searchInsert([1, 3], 2)); // 1번 틀림 
+console.log(searchInsert([1, 3, 5], 1)); // 2번 틀림 
+console.log(searchInsert([1, 5, 6, 8, 9, 10], 1)); // 3번 틀림 
 
 // Example 1:
 
