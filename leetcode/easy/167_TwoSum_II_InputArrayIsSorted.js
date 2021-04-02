@@ -4,27 +4,26 @@
  * @return {number[]}
  */
 
-const binarySearch = (numbers, target) => {
-  const startIndex = 0;
-  const endIndex = numbers.length - 1;
+const binarySearch = (sortedArray, target) => {
+  let startIndex = 0;
+  let endIndex = sortedArray.length - 1;
 
-  while (startIndex <= endIndex) {
-    const middleIndex = startIndex + Math.floor((endIndex - startIndex) / 2);
-    const nextTarget = sortedArray[middleIndex];
-
-    if (nextTarget === target) {
-
-      return middleIndex;
+  while (startIndex < endIndex) {
+    const sumIndex = sortedArray[startIndex] + sortedArray[endIndex];
+    if (sumIndex === target) {
+      return [startIndex + 1, endIndex + 1];
     }
-    nextTarget < target
-      ? startIndex = middleIndex + 1
-      : endIndex = middleIndex - 1;
+    sumIndex < target
+      ? startIndex++
+      : endIndex--;
   }
-
-  return -1;
 };
 
 var twoSum = function(numbers, target) {
-  return target;
+  return binarySearch(numbers, target);
 };
 
+
+console.log(twoSum([2, 7, 11, 15], 9)); // [1, 2]
+console.log(twoSum([2, 3, 4], 6));  // [1, 3]
+console.log(twoSum([-1, 0], -1));  // [1, 2]
