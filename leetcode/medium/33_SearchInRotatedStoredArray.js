@@ -12,10 +12,10 @@ const binarySearch = (sortedArray, target) => {
     const middleIndex = Math.floor((endIndex - startIndex) / 2);
     const nextTarget = sortedArray[middleIndex];
 
-    if (nextTarget === target) {
-      return nextTarget;
+    if (nextTarget.number === target) {
+      return nextTarget.index;
     }
-    nextTarget < target
+    nextTarget.number < target
       ? startIndex++
       : endIndex--;
   }
@@ -23,8 +23,15 @@ const binarySearch = (sortedArray, target) => {
   return -1;
 };
 
+const setSortedNumber = (nums) => {
+  return nums.map((number, index) => {
+    return {number, index}
+  }).sort((a, b) => a.number - b.number);
+}
+
 var search = function(nums, target) {
-  return binarySearch(nums.sort(), target);
+  const sortedNums = setSortedNumber(nums);
+  return binarySearch(sortedNums, target);
 };
 
 console.log(search([4,5,6,7,0,1,2], 0)); // 4
