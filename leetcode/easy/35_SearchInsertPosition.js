@@ -7,28 +7,12 @@
 const binarySearch = (sortedArray, target) => {
   let startIndex = 0;
   let endIndex = sortedArray.length - 1;
-  
-  if (target < sortedArray[0]) {
-    return 0;
-  }
-  if (target > sortedArray[endIndex]) {
-    return endIndex + 1;
-  }
 
   while (startIndex <= endIndex) {
-    const middleIndex = startIndex + Math.floor((endIndex - startIndex) / 2);
+    const middleIndex = Math.floor((startIndex + endIndex) / 2);
     const nextTarget = sortedArray[middleIndex];
 
-    if (nextTarget < target && sortedArray[middleIndex + 1] > target) {
-      return middleIndex + 1;
-    }
-    if (nextTarget === target ||
-       (middleIndex !== 0 
-        && sortedArray[middleIndex - 1] < target 
-        && sortedArray[middleIndex + 1] > target)) {
-      
-      if (sortedArray[middleIndex - 1] === target) return middleIndex - 1;
-
+    if (nextTarget === target) {
       return middleIndex;
     }
     nextTarget < target
@@ -36,7 +20,7 @@ const binarySearch = (sortedArray, target) => {
       : endIndex = middleIndex - 1;
   }
 
-  return -1;
+  return startIndex;
 };
 
 var searchInsert = function(nums, target) {
