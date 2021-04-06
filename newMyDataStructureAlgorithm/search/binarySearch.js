@@ -1,20 +1,20 @@
-function binarySearch (target, dataArray) {
-  let low = 0;
-  let high = dataArray.length - 1;
-  
-  while (low <= high) {
-    let mid = Math.floor((high + low) / 2);
-    let guess = dataArray[mid];
-    if (guess === target) {
-      return guess;
-    } else if (guess > target) {
-      high = mid - 1;
-    } else {
-      low = mid + 1;
+const binarySearch = (sortedArray, target) => {
+  let startIndex = 0;
+  let endIndex = sortedArray.length - 1;
+
+  while (startIndex <= endIndex) {
+    const middleIndex = Math.floor((startIndex + endIndex) / 2);
+    const nextTarget = sortedArray[middleIndex];
+
+    if (nextTarget === target) {
+      return middleIndex;
     }
+    nextTarget < target
+      ? startIndex = middleIndex + 1
+      : endIndex = middleIndex - 1;
   }
-  
-  return undefined;
-}
+
+  return startIndex;
+};
   
 console.log(binarySearch(8, [1,2,3,4,5,6,7,8,9,10,11,12]));
