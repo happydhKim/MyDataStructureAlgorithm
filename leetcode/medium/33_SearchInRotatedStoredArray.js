@@ -4,34 +4,37 @@
  * @return {number}
  */
 
-const binarySearch = (sortedArray, target) => {
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+
+ var search = function(nums, target) {
+  if (nums.length === 0) return -1; // check empty
+
   let startIndex = 0;
-  let endIndex = sortedArray.length - 1;
+  let endIndex = nums.length - 1;
 
   while (startIndex <= endIndex) {
-    const middleIndex = Math.floor((endIndex - startIndex) / 2);
-    const nextTarget = sortedArray[middleIndex];
+    const middleIndex = startIndex + Math.floor((endIndex - startIndex) / 2);
 
-    if (nextTarget.number === target) {
-      return nextTarget.index;
+    if (nums[middleIndex] === target) {
+      return middleIndex;
     }
-    nextTarget.number < target
-      ? startIndex++
-      : endIndex--;
+    
+    if (nums[startIndex] <= nums[middleIndex]) {
+      nums[startIndex] <= target && target < nums[middleIndex]
+        ? endIndex = middleIndex - 1
+        : startIndex = middleIndex + 1;
+    } else {
+      nums[middleIndex] < target && target <= nums[endIndex]
+        ? startIndex = middleIndex + 1
+        : endIndex = middleIndex - 1
+    }
   }
 
-  return -1;
-};
-
-const setSortedNumber = (nums) => {
-  return nums.map((number, index) => {
-    return {number, index}
-  }).sort((a, b) => a.number - b.number);
-}
-
-var search = function(nums, target) {
-  const sortedNums = setSortedNumber(nums);
-  return binarySearch(sortedNums, target);
+  return startIndex;
 };
 
 console.log(search([4,5,6,7,0,1,2], 0)); // 4
