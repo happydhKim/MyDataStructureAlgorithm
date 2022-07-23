@@ -48,3 +48,6 @@ console.log(threeSum([0,0,0]));
 
 // Input: nums = [0,0,0]
 // Output: [[0,0,0]]
+
+
+// combination 으로 푸니 runtime error 나와서 다시 해봐야 함
