@@ -19,3 +19,32 @@ const solution = arr => {
 };
 
 console.log(solution(arr)); // [-2, 2]
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42885?language=javascript
+function solution2(people, limit) {
+  let answer = 0;
+  people.sort((a, b) => a - b);
+
+  const ALL_PEOPLE_COUNT = people.length;
+  let left = 0,
+      right = ALL_PEOPLE_COUNT - 1;
+
+  while (left < right) {
+    const sum = people[left] + people[right];
+    if (sum > limit) {
+      right--;
+    } else {
+      left++;
+      right--;
+    }
+    answer++;
+  }
+  if (left === right) answer++;
+  return answer;
+}
+
+console.log(solution2([70, 50, 80, 50], 100));
+console.log(solution2([70, 80, 50], 100));
+
+// [70, 50, 80, 50]	100	3
+// [70, 80, 50]	100	3
